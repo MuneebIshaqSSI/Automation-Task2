@@ -1,0 +1,70 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Task2 {
+
+	public static void main(String[] args) {
+		
+		// Importing Chrome driver
+		System.setProperty("webdriver.chrome.driver", "C:\\Softwares\\chromedriver.exe");
+		ChromeDriver driver = new ChromeDriver();
+		
+		//Opening the website
+		driver.get("https://www.alibaba.com/");
+		
+		//maximizing window
+		driver.manage().window().maximize();
+		
+		//waiting for the site to load. As it takes alot of time, so setting the time to 90 sec
+		driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+		
+		// Finding the Category Header Option
+		WebElement mainMenu = driver.findElement(By.xpath("(//span[text()='Categories'])[1]/preceding-sibling::I/.."));
+
+		//Actions class
+		Actions actions = new Actions(driver);
+
+		//Hovering on Category Header Option
+		actions.moveToElement(mainMenu);
+
+		// Finding Luggage, Bags & Cases / Shoes & Accessories 
+		WebElement subMenu = driver.findElement(By.xpath("(//a[text()='Shoes & Accessories'])[3]"));
+
+		//Hovering on Luggage, Bags & Cases / Shoes & Accessories 
+		actions.moveToElement(subMenu);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+		//Clicking on Shoes Care & Services 
+		driver.findElement(By.xpath("(//a[@class='level-two-title'][text()='Shoe Care & Services'])[1]")).click();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		
+		// First Page verification
+		String actualTitle = driver.getTitle();
+		String expectedTitle = "Shoe Care & Services";
+		
+		if(actualTitle.equalsIgnoreCase(expectedTitle))
+			System.out.println("Shoe Care & Services' page is opened");
+		else
+			System.out.println("Shoe Care & Services' page is not opened");
+		
+		//Clicking on Shoe Brushes
+		driver.findElement(By.xpath("(//DIV[@class='category-head'][text()='Categories']/..//a[text()='Shoe Brushes'])[1]")).click();
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		
+		// First Page verification
+		String actualTitle1 = driver.getTitle();
+		String expectedTitle1 = "Shoe Care & Services";
+				
+		if(actualTitle1.equalsIgnoreCase(expectedTitle1))
+			System.out.println("Shoe Brushes' page is opened");
+		else
+			System.out.println("Shoe Brushes' page is not opened");
+		
+	}
+
+}
+
